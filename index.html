@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Quiz</title>
+    
+       </head>
+    <style>
+        body {
+    background-color: #00adb5;
+    
+    color: #eeeeee;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 2em 2em 4em;
+  font-size: 20px;
+  font-family: sans-serif;
+  color: #eeeeee;
+}
+.question{
+  font-weight: 600;
+}
+.answers {
+    margin-bottom: 60px;
+
+}
+#submit{
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: #ff2e63;
+  color: #eeeeee;
+  border: 59px;
+  border-radius: 200px;
+  padding: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+#submit:hover{
+  background-color: #ff2e63;
+}
+h1{ 
+  margin-bottom: 60px;
+margin: auto;
+  width: 50%;
+  border: 3px solid #a7ff83;
+  padding: 10px;
+        
+}
+
+
+</style>
+<body>
+    <h1>
+    This is a Quiz Considered of Five Questions
+    </h1>
+<div id="quiz"></div>
+<button id="submit">Get Results</button>
+<div id="results"></div>
+
+
+<script>
+    alert("Hello,You're About to Take A Quiz!");
+var myQuestions = [
+  {
+    question: "1.What year are we really in?",
+    answers: {
+      a: '2019',
+      b: '2021',
+      c: '2020',
+      d: '2022'  
+    },
+    correctAnswer: 'b'
+  },
+    {
+    question: "2.Who is on the dollar bill?",
+    answers: {
+      a: 'George Washington',
+      b: 'Thomas Jefferson',
+      c: 'Abraham Lincoln',
+      d: 'James Madison'  
+    },
+    correctAnswer: 'a'
+  },
+    {
+    question: "3.Who is the richest man on Earth right now?",
+    answers: {
+      a: 'Elon Musk',
+      b: 'Bill Gates',
+      c: 'Jeff Bezos',
+      d: 'Bernard Arnault'  
+    },
+    correctAnswer: 'c'
+  },
+    {
+    question: "4.How many bones are there in the human body?",
+    answers: {
+      a: '206',
+      b: '205',
+      c: '201',
+      d: '209'
+    },
+    correctAnswer: 'a'
+  },
+  {
+    question: "5.Who is the first president of the United State?",
+    answers: {
+      a: 'John Adams',
+      b: 'Thomas Jefferson',
+      c: 'George Washington',
+       d: 'James Madison'
+    },
+    correctAnswer: 'c'
+  }
+    
+];
+
+var quizContainer = document.getElementById('quiz');
+var resultsContainer = document.getElementById('results');
+var submitButton = document.getElementById('submit');
+
+generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
+
+function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
+
+  function showQuestions(questions, quizContainer){
+   
+    var output = [];
+    var answers;
+
+    
+    for(var i=0; i<questions.length; i++){
+      
+      
+      answers = [];
+
+      
+      for(letter in questions[i].answers){
+
+        
+        answers.push(
+          '<label>'
+            + '<input type="radio" name="question'+i+'" value="'+letter+'">'
+            + letter + ': '
+            + questions[i].answers[letter]
+          + '</label>'
+        );
+      }
+
+      
+      output.push(
+        '<div class="question">' + questions[i].question + '</div>'
+        + '<div class="answers">' + answers.join('') + '</div>'
+      );
+    }
+
+    
+    quizContainer.innerHTML = output.join('');
+  }
+
+
+  function showResults(questions, quizContainer, resultsContainer){
+    
+    
+    var answerContainers = quizContainer.querySelectorAll('.answers');
+    
+    
+    var userAnswer = '';
+    var numCorrect = 0;
+    
+   
+    for(var i=0; i<questions.length; i++){
+
+      
+      userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
+      
+      
+      if(userAnswer===questions[i].correctAnswer){
+      
+        numCorrect++;
+        
+        
+        answerContainers[i].style.color = '#a7ff83';
+      }
+      
+      else{
+        
+        answerContainers[i].style.color = '#f73859';
+      }
+    }
+
+    
+    resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+  }
+
+  
+  showQuestions(questions, quizContainer);
+  
+  
+  submitButton.onclick = function(){
+    showResults(questions, quizContainer, resultsContainer);
+  }
+
+}
+    </script>
+</body>
+    </html>
